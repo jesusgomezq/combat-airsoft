@@ -9,7 +9,7 @@ const SearchBar = () => {
           type="text"
           placeholder="Buscar aqui"
         //   onChange={(e) => setSearch(e.target.value)}
-          className="w-[200px] group-hover:w-[300px] transition-all duration-300
+          className="w-[200px] md:group-hover:w-[600px] transition-all duration-300
            rounded-full border border-gray-400 px-2 py-1 focus:outline-none
           focus:border-1 focus:border-bgDesingColor sm:w-[200px]"
         //   value={search}
