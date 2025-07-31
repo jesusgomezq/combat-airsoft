@@ -1,10 +1,9 @@
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import { RxCross2 } from "react-icons/rx";
 import logoNav from "../../assets/logoNavbar.avif";
 import Cartwidget from "../CartWidget/Cartwidget";
-import SearchBar from "../SearchBar/SearchBar";
 import { CiLogout } from "react-icons/ci";
 import { LuUserPlus, LuUserRoundCheck } from "react-icons/lu";
 import { FcMenu } from "react-icons/fc";
@@ -13,7 +12,8 @@ export default function Navbar() {
 
   return (
     <div className="sticky top-0 z-50">
-      {/* Mobile menu */}
+
+       {/* <========= Mobile first ========> */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
@@ -49,10 +49,10 @@ export default function Navbar() {
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6 ">
                   <Link
                     to={"/signup"}
-                    className="text-sm font-medium text-gray-900 ">
+                    className="font-medium text-gray-900 ">
                     Signup
                   </Link>
-                  <div className="flow-root">
+                  <div>
                     <Link
                       to={"/order"}
                       className="-m-2 block p-2 font-medium text-gray-900">
@@ -80,7 +80,7 @@ export default function Navbar() {
         </Dialog>
       </Transition.Root>
 
-      {/* desktop  */}
+      {/* <========= Desktop =========> */}
       <header className="relative">
         <nav className="bg-gray-600 px-4 py-6 sm:px-6 lg:px-8 shadow-xl">
           <div className="container mx-auto">
@@ -108,9 +108,6 @@ export default function Navbar() {
               </div>
 
               <div className="ml-auto flex items-center gap-4">
-                {/* <div className="gap-2 group hidden sm:block">
-                  <SearchBar />
-                </div> */}
                   <Cartwidget />
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
                   <Link

@@ -17,7 +17,7 @@ const Cartwidget = () => {
         <Link to={'/cart'}>
           <PiShoppingCartSimpleThin className="text-2xl" />
           <span className="relative -top-2.5 left-0  text-xs text-white">
-            {/* {cartItems.length} */}
+            
           </span>
         </Link>
       </div>
