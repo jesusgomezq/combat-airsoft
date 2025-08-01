@@ -5,15 +5,22 @@ import { RxCross2 } from "react-icons/rx";
 import logoNav from "../../assets/logoNavbar.avif";
 import Cartwidget from "../CartWidget/Cartwidget";
 import { CiLogout } from "react-icons/ci";
-import { LuUserPlus, LuUserRoundCheck } from "react-icons/lu";
+import { LuUserPlus, LuUserRound, LuUserRoundCheck } from "react-icons/lu";
 import { FcMenu } from "react-icons/fc";
-export default function Navbar() {
+
+const Navbar = () => {
   const [open, setOpen] = useState(false);
+
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const logout = () => {
+    localStorage.clear("user");
+    window.location.href = "/login";
+  };
 
   return (
     <div className="sticky top-0 z-50">
-
-       {/* <========= Mobile first ========> */}
+      {/* <========= Mobile first ========> */}
       <Transition.Root show={open} as={Fragment}>
         <Dialog as="div" className="relative z-40 lg:hidden" onClose={setOpen}>
           <Transition.Child
@@ -47,32 +54,60 @@ export default function Navbar() {
                   </button>
                 </div>
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6 ">
-                  <Link
-                    to={"/signup"}
-                    className="font-medium text-gray-900 ">
-                    Signup
-                  </Link>
-                  <div>
-                    <Link
-                      to={"/order"}
-                      className="-m-2 block p-2 font-medium text-gray-900">
-                      Order
+                  {!user ? (
+                    <Link to={"/signup"} className="font-medium text-gray-900 ">
+                      Registrate
                     </Link>
-                  </div>
+                  ) : (
+                    ""
+                  )}
+                  {!user ? (
+                    <div>
+                      <Link
+                        to={"/login"}
+                        className="font-medium text-gray-900 ">
+                        Iniciar Sesión
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    <Link
-                      to={"/dashboard"}
-                      className="-m-2 block p-2 font-medium text-gray-900">
-                      Admin
-                    </Link>
-                  </div>
+                  {user ? (
+                    <div>
+                      <Link
+                        to={"/order"}
+                        className="-m-2 block p-2 font-medium text-gray-900">
+                        Order
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
 
-                  <div className="flow-root">
-                    <Link className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
-                      Logout
-                    </Link>
-                  </div>
+                  {user?.user?.email === "test@gmail.com" ? (
+                    <div className="flow-root">
+                      <Link
+                        to={"/dashboard"}
+                        className="-m-2 block p-2 font-medium text-gray-900">
+                        Admin
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+
+                  {user ? (
+                    <div className="flow-root">
+                      <Link
+                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
+                        onClick={logout}>
+                        Logout
+                      </Link>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </Dialog.Panel>
             </Transition.Child>
@@ -108,25 +143,51 @@ export default function Navbar() {
               </div>
 
               <div className="ml-auto flex items-center gap-4">
-                  <Cartwidget />
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link
-                    to={"/signup"}
-                    className="text-sm font-medium text-gray-300 flex flex-col items-center">
-                    <LuUserPlus className="text-xl" />
-                    signup
-                  </Link>
-                  <Link
-                    to={"/dashboard"}
-                    className="text-sm font-medium text-gray-300 flex flex-col items-center">
-                    <LuUserRoundCheck className="text-xl" />
-                    Admin
-                  </Link>
+                {user ? <Cartwidget /> : ""}
 
-                  <Link className="text-sm font-medium text-gray-300 cursor-pointer flex flex-col items-center">
-                    <CiLogout className="text-xl" />
-                    Logout
-                  </Link>
+                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                  {!user ? (
+                    <Link
+                      to={"/signup"}
+                      className="text-sm font-medium text-gray-300 flex flex-col items-center">
+                      <LuUserPlus className="text-xl" />
+                      Registrate
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+                  {!user ? (
+                    <Link
+                      to={"/login"}
+                      className="text-sm font-medium text-gray-300 flex flex-col items-center">
+                      <LuUserRound className="text-xl" />
+                      Iniciar Sesión
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {user?.user?.email === "test@gmail.com" ? (
+                    <Link
+                      to={"/dashboard"}
+                      className="text-sm font-medium text-gray-300 flex flex-col items-center">
+                      <LuUserRoundCheck className="text-xl" />
+                      Admin
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  {user ? (
+                    <Link
+                      className="text-sm font-medium text-gray-300 cursor-pointer flex flex-col items-center"
+                      onClick={logout}>
+                      <CiLogout className="text-xl" />
+                      Logout
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </div>
               </div>
             </div>
@@ -135,4 +196,5 @@ export default function Navbar() {
       </header>
     </div>
   );
-}
+};
+export default Navbar;

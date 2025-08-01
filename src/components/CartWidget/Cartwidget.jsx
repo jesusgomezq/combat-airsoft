@@ -14,11 +14,9 @@ const Cartwidget = () => {
             orden
           </span>
         </Link>
-        <Link to={'/cart'}>
+        <Link to={"/cart"}>
           <PiShoppingCartSimpleThin className="text-2xl" />
-          <span className="relative -top-2.5 left-0  text-xs text-white">
-            
-          </span>
+          <span className="relative -top-2.5 left-0  text-xs text-white"></span>
         </Link>
       </div>
     </div>

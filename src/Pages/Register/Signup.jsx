@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../../components/Layout/Layout";
 import { useContext, useState } from "react";
 import myContext from "../../context/data/myContext";
@@ -16,6 +16,8 @@ const Signup = () => {
 
   const context = useContext(myContext);
   const { loading, setLoading } = context;
+
+  const navegate = useNavigate()
 
   const signup = async () => {
     setLoading(true)
@@ -38,17 +40,22 @@ const Signup = () => {
       const userRef = collection(fireDB, "users");
       await addDoc(userRef, user);
       toast.success("Registro exitoso");
+      
+      navegate('/login')
 
       setNombre("");
       setApellido("");
       setEmail("");
       setPassword("");
       setLoading(false)
+
     } catch (error) {
       console.log(error);
       setLoading(false)
     }
   };
+
+  
   return (
     <Layout>
       <section className="flex justify-center items-center h-screen">
