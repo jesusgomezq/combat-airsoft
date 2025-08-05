@@ -8,6 +8,7 @@ import { CiLogout } from "react-icons/ci";
 import { LuUserPlus, LuUserRound, LuUserRoundCheck } from "react-icons/lu";
 import { FcMenu } from "react-icons/fc";
 
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -17,6 +18,8 @@ const Navbar = () => {
     localStorage.clear("user");
     window.location.href = "/login";
   };
+
+  
 
   return (
     <div className="sticky top-0 z-50">

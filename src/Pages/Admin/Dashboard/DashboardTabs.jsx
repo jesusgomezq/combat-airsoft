@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import myContext from "../../../context/data/myContext";
 import { FaUser, FaCartPlus } from "react-icons/fa";
@@ -6,8 +6,12 @@ import { BsCartCheck } from "react-icons/bs";
 import { IoBagAddOutline } from "react-icons/io5";
 import { FiEdit } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 function DashboardTab() {
+  const context = useContext(myContext);
+  const { product, handleEdit, deleteProductTab } = context;
+  console.log(product);
 
   const [open, setOpen] = useState(false);
 
@@ -17,6 +21,10 @@ function DashboardTab() {
 
   const openModal = () => {
     setOpen(true);
+  };
+
+  const addItem = () => {
+    window.location.href = "/addproduct";
   };
   return (
     <>
@@ -63,7 +71,8 @@ function DashboardTab() {
                 <div className=" flex justify-end">
                   <button
                     type="button"
-                    className="text-gray-300 bg-gray-700 shadow- border hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 capitalize">
+                    className="text-gray-300 bg-gray-700 shadow- border hover:bg-gray-900 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 capitalize"
+                    onClick={addItem}>
                     {" "}
                     <div className="flex gap-2 items-center">
                       agregar producto <FaCartPlus size={20} />
@@ -100,40 +109,57 @@ function DashboardTab() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="">
-                      <tr className="bg-gray-50 border-b border-gray-700">
-                        <td className="px-6 py-4 text-gray-800">1.</td>
-                        <th
-                          scope="row"
-                          className="px-6 py-4 font-medium text-black whitespace-nowrap">
-                          <img
-                            className="w-16"
-                            src="https://dummyimage.com/720x400"
-                            alt="img"
-                          />
-                        </th>
-                        <td className="px-6 py-4 text-gray-800">marca</td>
-                        <td className="px-6 py-4 text-gray-800">Titulo</td>
-                        <td className="px-6 py-4 text-gray-800">$100</td>
-                        <td className="px-6 py-4 text-gray-800">lo que sea</td>
-                        <td className="px-6 py-4 text-gray-800">12 Aug 2019</td>
-                        <td className="px-6 py-4">
-                          <div className=" flex gap-2">
-                            <div className=" flex gap-2 cursor-pointer text-black ">
-                              <div>
-                                <FaRegTrashCan
-                                  size={23}
-                                  className="text-gray-700"
-                                />
+                    {product.map((item, i) => {
+                      const { title, image, logoBrand, price, category, date } =
+                        item;
+                      return (
+                        <tbody className="" key={i}>
+                          <tr className="bg-gray-50 border-b border-gray-700">
+                            <td className="px-6 py-4 text-gray-800">
+                              {i + 1}.
+                            </td>
+                            <th
+                              scope="row"
+                              className="px-6 py-4 font-medium text-black whitespace-nowrap">
+                              <img className="w-16" src={image} alt="img" />
+                            </th>
+                            <td className="px-6 py-4 text-gray-800">
+                              <img src={logoBrand} alt="" className="w-10" />
+                            </td>
+                            <td className=" first-letter:uppercase px-6 py-4 text-gray-800">
+                              {title}
+                            </td>
+                            <td className="px-6 py-4 text-gray-800">
+                              ${price}
+                            </td>
+                            <td className=" first-letter:uppercase px-6 py-4 text-gray-800">
+                              {category}
+                            </td>
+                            <td className="px-6 py-4 text-gray-800">{date}</td>
+                            <td className="px-6 py-4">
+                              <div className=" flex gap-2">
+                                <div className=" flex gap-2 cursor-pointer text-black ">
+                                  <div onClick={() => deleteProductTab(item)}>
+                                    <FaRegTrashCan
+                                      size={23}
+                                      className="text-gray-700"
+                                    />
+                                  </div>
+                                  <Link to={'/updateproduct'}>
+                                  <div onClick={()=>handleEdit(item)}>
+                                    <FiEdit
+                                      size={23}
+                                      className="text-gray-700"
+                                    />
+                                  </div>
+                                  </Link>
+                                </div>
                               </div>
-                              <div>
-                                <FiEdit size={23} className="text-gray-700" />
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
+                            </td>
+                          </tr>
+                        </tbody>
+                      );
+                    })}
                   </table>
                 </div>
               </div>
